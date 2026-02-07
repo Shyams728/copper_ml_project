@@ -4,6 +4,8 @@ import joblib
 import os
 import sys
 
+from copper_ml.config import MODEL_DIR
+
 def inspect_model(path):
     print(f"--- Inspecting {path} ---")
     if not os.path.exists(path):
@@ -27,12 +29,10 @@ def inspect_model(path):
     except Exception as e:
         print(f"Error loading: {e}")
 
-base_path = r"d:\data_science\industrial copper modeling\model"
+base_path = str(MODEL_DIR)
 files = [
-    "best_classification_model.pkl",
-    "best_regression_model.pkl", 
-    "final_classification_model.pkl",
-    "final_regression_model.pkl"
+    "pipeline_classification_model.pkl",
+    "pipeline_regression_model.pkl",
 ]
 
 for f in files:
