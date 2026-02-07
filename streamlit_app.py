@@ -62,6 +62,11 @@ def load_data():
 
 # Load Models
 artifacts = mu.load_artifacts()
+missing_models = []
+if artifacts.get('reg_model') is None:
+    missing_models.append("Regression model")
+if artifacts.get('cls_model') is None:
+    missing_models.append("Classification model")
 
 # Sidebar Navigation
 with st.sidebar:
@@ -71,6 +76,11 @@ with st.sidebar:
     
     st.markdown("---")
     st.info("Industrial Copper Modeling Project\nPredicting Pricing and Lead Status")
+    if missing_models:
+        st.warning(
+            "Model artifacts not found. Run `python prepare_data.py` and "
+            "`python train_models.py` to generate the required files."
+        )
 
 # --- HOME PAGE ---
 if page == "Home":
@@ -155,7 +165,10 @@ elif page == "EDA Dashboard":
                                   title="Lead Outcome Counts")
                     st.plotly_chart(fig5, use_container_width=True)
     else:
-        st.warning("Data not found. Run the modeling script to generate 'cleaned_copper_data.xlsx' or upload data.")
+        st.warning(
+            "Data not found. Run `python prepare_data.py` to generate "
+            "`model/cleaned_copper_data.csv` or upload data."
+        )
         uploaded_file = st.file_uploader("Upload Copper Data (Excel)", type="xlsx")
         if uploaded_file:
             # Logic to handle upload could go here (omitted for brevity)
@@ -190,6 +203,9 @@ elif page in ["Price Prediction", "Lead Status Classification"]:
         submit = st.form_submit_button("Predict")
     
     if submit:
+        if missing_models:
+            st.error("Missing model artifacts. Run `python prepare_data.py` and `python train_models.py`.")
+            st.stop()
         # Prepare input data
         # Note: We need to handle year/month/day extraction if that was done in training
         # Assuming model_utils/preprocessor handles raw dates or we do it here.

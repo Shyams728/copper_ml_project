@@ -1,4 +1,5 @@
 
+import os
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -16,6 +17,13 @@ warnings.filterwarnings('ignore')
 
 def load_and_prepare_data(filepath='model/cleaned_copper_data.csv'):
     print("Loading data...")
+    if not os.path.exists(filepath):
+        from prepare_data import DEFAULT_RAW_PATH, prepare_cleaned_data
+
+        print(f"Cleaned data not found at {filepath}.")
+        print(f"Generating cleaned data from {DEFAULT_RAW_PATH}...")
+        prepare_cleaned_data(DEFAULT_RAW_PATH, filepath)
+
     df = pd.read_csv(filepath)
     
     # Ensure correct types
@@ -160,6 +168,7 @@ def train_classification_model(df):
     return model
 
 if __name__ == "__main__":
+    os.makedirs('model', exist_ok=True)
     df, df_reg = load_and_prepare_data()
     
     # Train and Save Regression
