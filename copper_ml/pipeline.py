@@ -1,8 +1,30 @@
-from .data import prepare_cleaned_data
-from .training import train_all
+from importlib import util
 
 
 def run_pipeline() -> None:
+    required_modules = [
+        "numpy",
+        "pandas",
+        "sklearn",
+        "xgboost",
+        "lightgbm",
+        "category_encoders",
+        "imblearn",
+        "joblib",
+        "openpyxl",
+    ]
+    missing = [module for module in required_modules if util.find_spec(module) is None]
+    if missing:
+        missing_list = ", ".join(sorted(missing))
+        raise SystemExit(
+            "Missing required dependencies: {missing}. "
+            "Install them with `python -m pip install -r requirements.txt`."
+            .format(missing=missing_list)
+        )
+
+    from .data import prepare_cleaned_data
+    from .training import train_all
+
     prepare_cleaned_data()
     results = train_all()
 
