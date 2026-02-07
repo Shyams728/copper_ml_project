@@ -172,7 +172,7 @@ class DataLoader:
 
 # Initialize and load data
 data_loader = DataLoader()
-df = data_loader.load_data('/content/drive/MyDrive/data/Copper_Set.xlsx')  # Update with your path
+df = data_loader.load_data('data/raw/Copper_Set.xlsx')  # Update with your path
 
 if df is not None:
     data_info = data_loader.initial_inspection()
@@ -3126,8 +3126,8 @@ class ProjectConclusion:
         print("✅ Project artifacts saved to 'project_artifacts.json'")
 
         # Save cleaned data
-        df.to_csv('cleaned_copper_data.csv', index=False)
-        print("✅ Cleaned data saved to 'cleaned_copper_data.csv'")
+        df.to_csv('data/processed/cleaned_copper_data.csv', index=False)
+        print("✅ Cleaned data saved to 'data/processed/cleaned_copper_data.csv'")
 
         # Save models if available
         if hasattr(reg_modeler, 'best_model') and reg_modeler.best_model:
@@ -3282,7 +3282,7 @@ print(f"""
 • Lead Prediction: {cls_modeler.best_model['name'] if hasattr(cls_modeler, 'best_model') and cls_modeler.best_model else 'N/A'}
 
 💾 ARTIFACTS SAVED:
-• Cleaned data: cleaned_copper_data.csv
+• Cleaned data: data/processed/cleaned_copper_data.csv
 • Project report: project_report.md
 • Models: final_regression_model.pkl, final_classification_model.pkl
 • Full artifacts: project_artifacts.json
