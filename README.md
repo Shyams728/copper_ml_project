@@ -1,6 +1,6 @@
 # Copper ML Project
 
-End-to-end machine learning workflow for **copper price prediction** (regression) and **lead classification** (classification). The project is organized around Jupyter notebooks that cover exploratory data analysis (EDA), data cleaning, feature engineering, model training, and evaluation.
+End-to-end machine learning workflow for **copper price prediction** (regression) and **lead classification** (classification). The project includes notebooks for EDA and modeling plus a Streamlit app for interactive exploration and predictions.
 
 ## Project Goals
 
@@ -36,6 +36,9 @@ End-to-end machine learning workflow for **copper price prediction** (regression
 3. **Trace the modeling decisions**
    - The original notebooks provide the full history and experimentation process.
 
+4. **Run the Streamlit application**
+   - Use the scripts below to generate cleaned data and model artifacts, then launch the app.
+
 ## Typical Workflow (Notebook-Driven)
 
 While the exact steps are notebook-specific, the workflow generally follows:
@@ -53,17 +56,28 @@ While the exact steps are notebook-specific, the workflow generally follows:
 ### Prerequisites
 
 - Python 3.8+ (recommended)
-- JupyterLab or Jupyter Notebook
+- JupyterLab or Jupyter Notebook (for notebook workflows)
 
-Typical ML dependencies (install as needed):
+Install dependencies with:
 
-- `pandas`
-- `numpy`
-- `scikit-learn`
-- `matplotlib`
-- `seaborn`
+```bash
+python -m pip install -r requirements.txt
+```
 
-> Note: The project does not ship a `requirements.txt`. Install dependencies based on the imports you see in the notebooks.
+### Prepare Data + Train Models (Streamlit)
+
+The Streamlit app expects cleaned data and trained model artifacts under `model/`.
+
+```bash
+python prepare_data.py
+python train_models.py
+```
+
+### Launch Streamlit
+
+```bash
+streamlit run streamlit_app.py
+```
 
 ### Run the Notebooks
 
@@ -76,20 +90,24 @@ Then open the notebook(s) you want to run.
 
 ## Data
 
-This repository does not include raw datasets. Follow the notebook instructions/cells to locate or load the data required for each workflow.
+The `Copper_Set.xlsx` dataset is included in the repository root. The `prepare_data.py` script uses it to generate `model/cleaned_copper_data.csv`.
 
 ## Project Structure
 
 ```
 .
 ├── README.md
+├── Copper_Set.xlsx
 ├── copper_project_consolidated.ipynb
 ├── copper_modeling_final.ipynb
 ├── copper_price_prediction_and_leads_classification.ipynb
 ├── copper_EDA.ipynb
 ├── copper_EDA_ML.ipynb
 ├── industrial_copper_modeling_data_cleaning.ipynb
-└── industrial_copper_modeling_and_prediction.ipynb
+├── industrial_copper_modeling_and_prediction.ipynb
+├── prepare_data.py
+├── train_models.py
+└── streamlit_app.py
 ```
 
 ## Notes

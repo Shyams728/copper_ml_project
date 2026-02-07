@@ -54,7 +54,15 @@ def _prepare_input_df(data):
     # num_normal: width
     # cat: item_type, application, country_code
     
-    df = pd.DataFrame([data])
+    expected_cols = [
+        'quantity_tons',
+        'thickness',
+        'width',
+        'item_type',
+        'application',
+        'country_code',
+    ]
+    df = pd.DataFrame([data]).reindex(columns=expected_cols)
     
     # Ensure types match training
     df['quantity_tons'] = pd.to_numeric(df['quantity_tons'], errors='coerce')
